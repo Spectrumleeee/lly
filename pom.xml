@@ -5,11 +5,13 @@
     <artifactId>lly</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <description>玲珑玉</description>
+    <description>linglongyuliuliguang</description>
 
     <modules>
         <module>lly-core</module>
         <module>lly-common</module>
+        <module>lly-integration</module>
+        <module>lly-framework</module>
     </modules>
 
     <properties>
@@ -35,4 +37,5 @@
             </plugin>
         </plugins>
     </build>
+    <name>lly</name>
 </project>
