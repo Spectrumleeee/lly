@@ -12,6 +12,7 @@
         <module>lly-common</module>
         <module>lly-integration</module>
         <module>lly-framework</module>
+        <module>lly-example</module>
     </modules>
 
     <properties>
