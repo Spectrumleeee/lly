@@ -14,15 +14,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SampleBean {
-    
+
     public SampleBean() {
         PrintUtil.printClassBootstrapMsg(this.getClass(), "构造成功");
     }
-    
+
     public void init() {
         PrintUtil.printClassBootstrapMsg(this.getClass(), "init成功");
     }
-    
+
     public void destry() {
         PrintUtil.printClassBootstrapMsg(this.getClass(), "destroy成功");
     }

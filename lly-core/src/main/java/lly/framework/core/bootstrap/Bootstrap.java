@@ -25,7 +25,7 @@ public class Bootstrap {
 
     protected static void start() throws Exception {
         PrintUtil.printClassBootstrapMsg(Bootstrap.class, "开始启动");
-        
+
         String confDirString = System.getProperty("conf.dir", "src/main/resources");
         File confDir = new File(confDirString);
         if (!confDir.exists()) {
@@ -44,7 +44,7 @@ public class Bootstrap {
             Thread.sleep(3000L);
 
         context.close();
-        
+
         PrintUtil.printClassBootstrapMsg(Bootstrap.class, "关闭成功");
     }
 

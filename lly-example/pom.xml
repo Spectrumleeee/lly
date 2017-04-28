@@ -7,9 +7,7 @@
     <artifactId>lly</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <groupId>lly.framework</groupId>
   <artifactId>lly-example</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
   <name>lly-example</name>
   <url>http://maven.apache.org</url>
   <properties>

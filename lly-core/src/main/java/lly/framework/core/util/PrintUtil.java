@@ -6,13 +6,13 @@
 package lly.framework.core.util;
 
 public class PrintUtil {
-    
+
     public static void printClassBootstrapMsg(Class<?> clazz, String msg) {
         System.out.printf("%-15s >> %s\n", clazz.getSimpleName(), msg);
     }
-    
+
     public static void printClassMsg(Class<?> clazz, String msg) {
         System.out.printf("%-15s >> %s\n", clazz.getSimpleName(), msg);
     }
-    
+
 }

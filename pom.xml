@@ -17,6 +17,8 @@
 
     <properties>
         <junit.version>4.11</junit.version>
+        <spring.version>3.2.12.RELEASE</spring.version>
+        <junit.version>4.11</junit.version>
     </properties>
 
     <dependencies>
