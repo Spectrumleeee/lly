@@ -75,4 +75,5 @@ public class OperationInfo {
     public void setOneWay(boolean oneWay) {
         this.oneWay = oneWay;
     }
+    
 }

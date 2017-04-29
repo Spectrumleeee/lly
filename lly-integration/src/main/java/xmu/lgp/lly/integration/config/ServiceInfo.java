@@ -265,4 +265,8 @@ public class ServiceInfo {
     public String getServiceName() {
         return serviceQName.getLocalPart();
     }
+    
+    public OperationInfo getOperationInfo(String operationName) {
+        return (OperationInfo) operations.get(operationName);
+    }
 }

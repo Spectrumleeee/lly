@@ -1,8 +1,12 @@
 package xmu.lgp.lly.integration.spring;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.beans.factory.xml.*;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.w3c.dom.*;
 
 import xmu.lgp.lly.integration.config.ServiceConfig;
@@ -33,15 +37,39 @@ public abstract class AbstractServiceFactoryBeanDefParser implements BeanDefinit
         XmlServicesConfigurator xmlServiceConfig = new XmlServicesConfigurator();
         String protocol = "dubbo";
         boolean tokenFlag = false;
-        /**
-         * TODO
-         */
-
-        return null;
+        NamedNodeMap attrs = element.getAttributes();
+        Attr protocolAttr = (Attr)attrs.getNamedItem("protocol");
+        if(protocolAttr != null) {
+            protocol = protocolAttr.getValue();
+        }
+        Attr tokenAttr = (Attr)attrs.getNamedItem("tokenflag");
+        if(tokenAttr != null) {
+            tokenFlag = Boolean.parseBoolean(tokenAttr.getValue());
+        }
+        Attr configAttr = (Attr)attrs.getNamedItem("config");
+        if(configAttr != null) {
+            PathMatchingResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver(parserContext.getReaderContext().getResourceLoader());
+            try {
+                Resource[] configResources = resourcePatternResolver.getResources(configAttr.getValue());
+                xmlServiceConfig.setConfigResources(configResources);
+                xmlServiceConfig.loadConfigs();
+            } catch (IOException e) {
+                throw new IllegalArgumentException("failed to find config resource");
+            }
+        }
+        beanDef.getPropertyValues().addPropertyValue("protocol", protocol);
+        beanDef.getPropertyValues().addPropertyValue("serviceConfig", xmlServiceConfig);
+        doParse(element, parserContext, beanDef);
+        beanDef.setLazyInit(false);
+        beanDef.setScope("singleton");
+        String id = parserContext.getReaderContext().generateBeanName(beanDef);
+        parserContext.getRegistry().registerBeanDefinition(id, beanDef);
+        registerServiceBeans(parserContext, xmlServiceConfig, protocol, tokenFlag);
+        return beanDef;
     }
 
     protected abstract void doParse(Element element, ParserContext parserContext, BeanDefinition beandefinition);
 
-    protected abstract void registerServiceBean(ParserContext parserContext, ServiceConfig serviceConfig, String s,
+    protected abstract void registerServiceBeans(ParserContext parserContext, ServiceConfig serviceConfig, String s,
             boolean flag);
 }
