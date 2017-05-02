@@ -14,9 +14,7 @@ public class ServiceProviderFactoryBean implements ApplicationListener {
         onApplicationEvent((ContextRefreshedEvent) arg0);
     }
 
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-
-    }
+    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {}
 
     private ApplicationContext appCtx;
     private ServiceConfig serviceConfig;
