@@ -12,7 +12,7 @@
         http://www.springframework.org/schema/aop 
         http://www.springframework.org/schema/aop/spring-aop-3.0.xsd 
         http://xmu.lgp.com/lly/integration/ 
-        http://xmu.lgp.com/lly/integration/lly-integration.xsd">
+        http://xmu.lgp.com/lly/integration.xsd">
         
 <!--     <lly:serviceprovider protocol="dubbo" config="classpath:/services/lly-example-provider-services.xml" /> -->
     
