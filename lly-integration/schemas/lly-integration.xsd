@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://xmu.lgp.com/lly/integration" 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://xmu.lgp.com/lly/integration"
+    elementFormDefault="qualified" attributeFormDefault="unqualified">
+    
+    <xsd:import namespace="http://www.springframework.org/schema/beans"
+        schemaLocation="http://www.springframework.org/schema/beans/spring-beans.xml" />
+    
+    <xsd:complexType name="serviceFactoryType" abstract="true">
+        <xsd:complexContent>
+            <xsd:extension base="beans:identifiedType">
+                <xsd:sequence>
+                    <xsd:element ref="beans:property" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+                </xsd:sequence>
+                
+                <xsd:attribute name="protocol" type="xsd:string">
+                    <xsd:annotation>
+                        <xsd:documentation>Specifies the protocol of the service communication framework</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>     
+                
+                <xsd:attribute name="config" type="xsd:string" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation>Specifies the protocol of the service communication framework</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>       
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+        
+    <xsd:element name="serviceprovider">
+        <xsd:complexType>
+            <xsd:complexContent>
+                <xsd:extension base="serviceFactoryType">
+                    <xsd:attribute name="tokenFlag" type="xsd:boolean">
+                        <xsd:annotation>
+                            <xsd:documentation>Specifies if enable the communication token</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:attribute>
+                </xsd:extension>
+            </xsd:complexContent>
+        </xsd:complexType>
+    </xsd:element>
+    
+    <xsd:element name="serviceconsumer">
+        <xsd:complexType>
+            <xsd:complexContent>
+                <xsd:extension base="serviceFactoryType" />
+            </xsd:complexContent>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="registry">
+        <xsd:complexType>
+            <xsd:attribute name="id" use="required" type="xsd:ID" />
+            <xsd:attribute name="address" use="required" type="xsd:string" />
+        </xsd:complexType>
+    </xsd:element>
+    
+</xsd:schema>
