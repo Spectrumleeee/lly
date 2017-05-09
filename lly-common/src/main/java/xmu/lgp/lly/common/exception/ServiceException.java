@@ -60,7 +60,6 @@ public abstract class ServiceException extends RuntimeException {
     }
     
     private void initInnerErrorCode(ErrorCode errCode) {
-        errCode = errCode;
         if (errCode != null) {
             innerErrCode = errCode.getCode();
             innerErrCodeCls = errCode.getClass().getCanonicalName();

@@ -2,6 +2,8 @@ package xmu.lgp.lly.common.exception;
 
 public class BusinessException extends ServiceException {
     
+    private static final long serialVersionUID = 1L;
+
     public BusinessException(ErrorCode errCode) {
         super(errCode);
     }
