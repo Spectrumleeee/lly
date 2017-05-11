@@ -1,0 +1,2 @@
+pencrypt=xmu.lgp.lly.integration.dubbo.filter.SensitiveDataProviderFilter
+cencrypt=xmu.lgp.lly.integration.dubbo.filter.SensitiveDataConsumerFilter
