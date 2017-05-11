@@ -37,7 +37,7 @@ public class MonitorServiceImpl implements MonitorService, InitializingBean {
                 properties.load(inputStream);
                 systemStatus.setLlyVersion(properties.getProperty("lly.version"));
             } catch (Exception e) {
-                logger.warn("读取lsf版本号异常", e);
+                logger.warn("读取lly版本号异常", e);
                 systemStatus.setIp("unknown");
             } finally {
               if (inputStream != null) {
