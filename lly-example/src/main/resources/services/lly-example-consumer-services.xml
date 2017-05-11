@@ -4,4 +4,6 @@
     
     <service name="exampleService" interface="xmu.lgp.lly.example.service.ExampleService" timeout="15" />
     
+    <service name="helloService" interface="xmu.lgp.lly.example.service.HelloService" timeout="15" />
+    
 </services>

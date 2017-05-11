@@ -35,8 +35,9 @@ public class Main {
 
     protected static void stop(Integer... sleepTimes) throws Exception {
         int times = sleepTimes.length != 0 ? sleepTimes[0].intValue() : 1;
-        for (int i = 0; i < times; i++)
+        for (int i = 0; i < times; i++) {
             Thread.sleep(3000L);
+        }
 
         context.close();
 

@@ -14,7 +14,7 @@ import xmu.lgp.lly.common.context.ServiceContext;
 
 @ContextConfiguration(locations={"classpath:application.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class SprintTestCase extends AbstractJUnit4SpringContextTests {
+public class SpringTestCase extends AbstractJUnit4SpringContextTests {
     
     protected Logger logger = LoggerFactory.getLogger(getClass());
     
