@@ -1,5 +1,7 @@
 package xmu.lgp.lly.integration;
 
-public class SafeLifecycle {
-
+public interface SafeLifecycle {
+    
+    public void safelyStop();
+    
 }
