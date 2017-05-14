@@ -209,6 +209,13 @@ public class XmlServicesConfigurator extends AbstractServiceConfig implements In
     public void afterPropertiesSet() throws Exception {
         
     }
+    
+    public static boolean isSensitiveService(Class<?> serviceClass) {
+        if (serviceClass == null) {
+            return false;
+        }
+        return sensitiveServices.get(serviceClass) == null ? false : ((Boolean)sensitiveServices.get(serviceClass)).booleanValue();
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(XmlServicesConfigurator.class);
     private static final String SERVICES_CONFIG_FILE_SUFFIX = "services.xml";
