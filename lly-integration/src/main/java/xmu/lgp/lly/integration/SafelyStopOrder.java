@@ -7,5 +7,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({java.lang.annotation.ElementType.TYPE})
 public @interface SafelyStopOrder {
+    
     int order() default 0;
+    
 }

@@ -15,7 +15,7 @@ public class ServiceProtocolComponentFactory {
             return dubboProtocolComp;
         }
         if ("ebox".equalsIgnoreCase(protocol)) {
-            throw new RuntimeException("此版本LSF已经不再提供ebox支持");
+            throw new RuntimeException("此版本LLY已经不再提供ebox支持");
         }
         
         return null;
