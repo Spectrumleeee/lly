@@ -1,0 +1,4 @@
+exception=xmu.lgp.lly.integration.dubbo.filter.ExceptionFilter
+validation=xmu.lgp.lly.integration.dubbo.filter.ValidationFilter
+lly_context=xmu.lgp.lly.integration.dubbo.filter.ContextFilter
+lly_setcontext=xmu.lgp.lly.integration.dubbo.filter.SetContextFilter

@@ -1,0 +1,2 @@
+llylogback=xmu.lgp.lly.integration.dubbo.container.LlyLogbackContainer
+llyreport=xmu.lgp.lly.integration.dubbo.container.LlyReportStatusContainer
