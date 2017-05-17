@@ -19,6 +19,18 @@ import xmu.lgp.lly.common.annotation.Secret;
 
 public class BaseEntity implements Serializable {
 
+    private static final long serialVersionUID = 8050108680140225191L;
+    
+    private static Map<Class<?>, PropertyDescriptor[]> propMap = new HashMap<>(256);
+    
+    private transient ThreadLocal<BaseEntity> visitor = new ThreadLocal<BaseEntity>() {
+        protected BaseEntity initialValue() {
+            return null;
+        }
+    };
+    
+    private String simpleName = getClass().getSimpleName();
+    
     public String toString() {
         if (visitor.get() == null) {
             visitor.set(this);
@@ -119,10 +131,10 @@ public class BaseEntity implements Serializable {
             return true;
         }
         if (result instanceof Map) {
-            return ((Map) result).isEmpty();
+            return ((Map<?, ?>) result).isEmpty();
         }
         if ((result instanceof List) || (result instanceof Collection)) {
-            return ((Collection) result).isEmpty();
+            return ((Collection<?>) result).isEmpty();
         }
         return false;
     }
@@ -137,7 +149,7 @@ public class BaseEntity implements Serializable {
                 if (props == null) {
                     PropertyDescriptor[] propArray = Introspector.getBeanInfo(clazz, Object.class)
                             .getPropertyDescriptors();
-                    List<PropertyDescriptor> propList = new ArrayList(20);
+                    List<PropertyDescriptor> propList = new ArrayList<>(20);
 
                     for (PropertyDescriptor prop : propArray) {
                         Method m = prop.getReadMethod();
@@ -188,19 +200,13 @@ public class BaseEntity implements Serializable {
     private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         is.defaultReadObject();
         
-        visitor = new ThreadLocal() {
+        visitor = new ThreadLocal<BaseEntity>() {
+            
             protected BaseEntity initialValue() {
                 return null;
             }
+            
         };
     }
     
-    private static final long serialVersionUID = 8050108680140225191L;
-    private static Map propMap = new HashMap(256);
-    private transient ThreadLocal visitor = new ThreadLocal() {
-        protected BaseEntity initialValue() {
-            return null;
-        }
-    };
-    private String simpleName = getClass().getSimpleName();
 }

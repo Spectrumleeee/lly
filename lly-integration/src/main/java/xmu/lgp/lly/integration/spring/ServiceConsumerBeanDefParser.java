@@ -29,7 +29,7 @@ public class ServiceConsumerBeanDefParser extends AbstractServiceFactoryBeanDefP
         }
         
         if (serviceConfig != null) {
-            Iterator<ServiceInfo> serviceIt = serviceConfig.getServiceInfos().iterator();
+            Iterator<ServiceInfo> serviceIt = (Iterator<ServiceInfo>) serviceConfig.getServiceInfos().iterator();
             while(serviceIt.hasNext()) {
                 svcProtocolComp.registerConsumerService(parserContext.getRegistry(), (ServiceInfo)serviceIt.next());
             }

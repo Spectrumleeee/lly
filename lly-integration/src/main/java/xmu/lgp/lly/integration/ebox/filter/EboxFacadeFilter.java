@@ -15,6 +15,7 @@ public class EboxFacadeFilter implements InvocationHandler {
     
     private static Object target;
     
+    @SuppressWarnings("unchecked")
     public static <T> T bind(T target) {
         EboxFacadeFilter filter = new EboxFacadeFilter();
         EboxFacadeFilter.target = target;

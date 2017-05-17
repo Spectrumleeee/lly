@@ -6,6 +6,18 @@ import javax.xml.namespace.QName;
 
 public class OperationInfo {
 
+    private ServiceInfo serviceInfo;
+    
+    private String operationName;
+    
+    private Method operationMethod;
+    
+    private int timeout;
+    
+    private boolean async;
+    
+    private boolean oneWay;
+    
     public OperationInfo(ServiceInfo serviceInfo, Method method) {
         if (method == null) {
             throw new IllegalArgumentException("method could't be null!");
@@ -20,14 +32,7 @@ public class OperationInfo {
     public QName getOperationQName() {
         return new QName(serviceInfo.getNamespaceURI(), operationName);
     }
-
-    private ServiceInfo serviceInfo;
-    private String operationName;
-    private Method operationMethod;
-    private int timeout;
-    private boolean async;
-    private boolean oneWay;
-
+    
     public ServiceInfo getServiceInfo() {
         return serviceInfo;
     }

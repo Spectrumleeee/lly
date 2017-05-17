@@ -32,15 +32,15 @@ import com.alibaba.dubbo.container.Container;
  */
 public class Main {
     
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+    
     private static final ExtensionLoader<Container> loader = ExtensionLoader.getExtensionLoader(Container.class);
+    
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss]");
     
     private static final List<Container> containers = new ArrayList<>();
     
-    private static Logger logger = LoggerFactory.getLogger(Main.class);
-    
     public static final String DUBBO_CONTAINER_KEY = "dubbo.container";
-    
-    private static SimpleDateFormat sdf = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss]");
     
     static {
         LlyLogbackContainer.getInstance().start();
@@ -55,7 +55,6 @@ public class Main {
         init(args);
         
         logger.info("[" + sdf.format(new Date()) + "] xmu.lgp.lly.integration.Main stop...");
-        
         LlyLogbackContainer.getInstance().stop();
     }
     

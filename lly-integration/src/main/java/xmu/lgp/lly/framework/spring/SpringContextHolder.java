@@ -7,9 +7,9 @@ import org.springframework.context.ApplicationContextAware;
 
 public class SpringContextHolder implements ApplicationContextAware, DisposableBean {
 
-    public SpringContextHolder() {
-        
-    }
+    private static volatile ApplicationContext applicationContext = null;
+    
+    public SpringContextHolder() {}
     
     public static ApplicationContext getApplicationContext() {
         return applicationContext;
@@ -24,7 +24,5 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         SpringContextHolder.applicationContext = applicationContext;
     }
-
-    private static volatile ApplicationContext applicationContext = null;
     
 }

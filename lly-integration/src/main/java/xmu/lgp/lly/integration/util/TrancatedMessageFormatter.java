@@ -106,12 +106,12 @@ public class TrancatedMessageFormatter {
                     i = j + 1;
                 } else {
                     sbf.append(messagePattern.subSequence(i, j - 1));
-                    deeplyAppendParameter(sbf, argArray[L], new HashSet(), maxLength);
+                    deeplyAppendParameter(sbf, argArray[L], new HashSet<Object>(), maxLength);
                     i = j + 2;
                 }
             } else {
                 sbf.append(messagePattern.substring(i, j));
-                deeplyAppendParameter(sbf, argArray[L], new HashSet(), maxLength);
+                deeplyAppendParameter(sbf, argArray[L], new HashSet<Object>(), maxLength);
                 i = j + 2;
             }
         }
@@ -160,8 +160,8 @@ public class TrancatedMessageFormatter {
         }
         
         if (!o.getClass().isArray()) {
-            if (getTrancateTxLogConfiguration().isTrancateTxLog() &&(o instanceof Collection)&& ((Collection)o).size() > 50) {
-                sbf.append("[collection size is: " + ((Collection)o).size() + ", to much to print, omit...]");
+            if (getTrancateTxLogConfiguration().isTrancateTxLog() &&(o instanceof Collection)&& ((Collection<?>)o).size() > 50) {
+                sbf.append("[collection size is: " + ((Collection<?>)o).size() + ", to much to print, omit...]");
             }else {
                 safeObjectAppend(sbf, o);
             }
@@ -182,7 +182,7 @@ public class TrancatedMessageFormatter {
         } else if (o instanceof double[]) {
             doubleArrayAppend(sbf, (double[])o);
         } else if (getTrancateTxLogConfiguration().isTrancateTxLog() && Array.getLength(o) > 50) {
-            sbf.append("[array size is: " + ((Collection)o).size() + ", to much to print, omit...]");
+            sbf.append("[array size is: " + ((Collection<?>)o).size() + ", to much to print, omit...]");
         } else {
             objectArrayAppend(sbf, (Object[])o, seenMap, maxLength);
         }

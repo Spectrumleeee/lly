@@ -8,13 +8,28 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.xml.namespace.QName;
 
-import org.springframework.util.StringUtils;
-
 public class ServiceInfo {
 
-    public ServiceInfo(Class serviceClass, QName serviceQName, String implementor) {
-        operations = new HashMap();
-        methodMap = new HashMap();
+    private QName serviceQName;
+    private Class<?> serviceClass;
+    private String implementor;
+    private HashMap<String, OperationInfo> operations;
+    private HashMap<Method, OperationInfo> methodMap;
+    private int timeout;
+    private boolean validation;
+    private String version;
+    private String proxy;
+    private String group;
+    private String registry;
+    private String url;
+    private int executes;
+    private int actives;
+    private boolean sensitive;
+    private Boolean register;
+    
+    public ServiceInfo(Class<?> serviceClass, QName serviceQName, String implementor) {
+        operations = new HashMap<String, OperationInfo>();
+        methodMap = new HashMap<Method, OperationInfo>();
         validation = false;
         sensitive = false;
         if (serviceClass == null) {
@@ -48,7 +63,7 @@ public class ServiceInfo {
         generateOperationInfos(serviceClass);
     }
 
-    private void generateOperationInfos(Class clazz) {
+    private void generateOperationInfos(Class<?> clazz) {
         Method methods[] = clazz.getDeclaredMethods();
         for (int i = 0; i < methods.length; i++) {
             int mod = methods[i].getModifiers();
@@ -67,19 +82,19 @@ public class ServiceInfo {
         }
 
         if (clazz.isInterface()) {
-            Class superIntfs[] = clazz.getInterfaces();
+            Class<?> superIntfs[] = clazz.getInterfaces();
             for (int i = 0; i < superIntfs.length; i++) {
                 generateOperationInfos(superIntfs[i]);
             }
         } else {
-            Class superClass = clazz.getSuperclass();
+            Class<?> superClass = clazz.getSuperclass();
             if (superClass != null && superClass != java.lang.Object.class) {
                 generateOperationInfos(superClass);
             }
         }
     }
 
-    protected String getNamespaceURI(Class clazz) {
+    protected String getNamespaceURI(Class<?> clazz) {
         WebService webService = (WebService) clazz.getAnnotation(javax.jws.WebService.class);
         if (webService != null) {
             return webService.targetNamespace();
@@ -99,7 +114,7 @@ public class ServiceInfo {
         return namespaceURI.toString();
     }
 
-    protected String getServiceName(Class clazz) {
+    protected String getServiceName(Class<?> clazz) {
         WebService webService = (WebService) clazz.getAnnotation(javax.jws.WebService.class);
         if (webService != null) {
             return webService.name();
@@ -109,23 +124,6 @@ public class ServiceInfo {
         }
     }
 
-    private QName serviceQName;
-    private Class serviceClass;
-    private String implementor;
-    private HashMap operations;
-    private HashMap methodMap;
-    private int timeout;
-    private boolean validation;
-    private String version;
-    private String proxy;
-    private String group;
-    private String registry;
-    private String url;
-    private int executes;
-    private int actives;
-    private boolean sensitive;
-    private Boolean register;
-
     public QName getServiceQName() {
         return serviceQName;
     }
@@ -134,11 +132,11 @@ public class ServiceInfo {
         this.serviceQName = serviceQName;
     }
 
-    public Class getServiceClass() {
+    public Class<?> getServiceClass() {
         return serviceClass;
     }
 
-    public void setServiceClass(Class serviceClass) {
+    public void setServiceClass(Class<?> serviceClass) {
         this.serviceClass = serviceClass;
     }
 
@@ -150,19 +148,19 @@ public class ServiceInfo {
         this.implementor = implementor;
     }
 
-    public HashMap getOperations() {
+    public HashMap<String, OperationInfo> getOperations() {
         return operations;
     }
 
-    public void setOperations(HashMap operations) {
+    public void setOperations(HashMap<String, OperationInfo> operations) {
         this.operations = operations;
     }
 
-    public HashMap getMethodMap() {
+    public HashMap<Method, OperationInfo> getMethodMap() {
         return methodMap;
     }
 
-    public void setMethodMap(HashMap methodMap) {
+    public void setMethodMap(HashMap<Method, OperationInfo> methodMap) {
         this.methodMap = methodMap;
     }
 

@@ -10,6 +10,10 @@ public class ServiceContext {
     
     public static final String DEFAULT_REQUEST_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
     
+    private Map<String, String> headers = new ConcurrentHashMap<>();
+    
+    private static final String LLY_PREFIX = "k.";
+    
     private static final ThreadLocal<ServiceContext> contexts = new InheritableThreadLocal<ServiceContext>(){
         
         public final ServiceContext childValue(ServiceContext parent) {
@@ -25,16 +29,13 @@ public class ServiceContext {
         }
     };
     
-    private static final String LLY_PREFIX = "k.";
-    
-    private Map<String, String> headers = new ConcurrentHashMap<>();
-    
     public static ServiceContext getContext() {
         return (ServiceContext)contexts.get();
     }
     
     public static ServiceContext getContext(boolean initFlowNo) {
         ServiceContext c = (ServiceContext)contexts.get();
+        
         if(!initFlowNo) {
             return c;
         }
@@ -45,6 +46,7 @@ public class ServiceContext {
 
     public static ServiceContext getContext(String prefix) {
         ServiceContext c = (ServiceContext)contexts.get();
+        
         if (prefix == null) {
             return c;
         }
@@ -66,6 +68,7 @@ public class ServiceContext {
         if(parent == null || parent == this) {
             return ;
         }
+        
         headers.clear();
         headers.putAll(headers);
     }

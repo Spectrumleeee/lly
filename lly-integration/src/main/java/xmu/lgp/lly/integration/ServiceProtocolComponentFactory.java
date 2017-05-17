@@ -11,9 +11,11 @@ public class ServiceProtocolComponentFactory {
     private static DubboProtocolComponent dubboProtocolComp = new DubboProtocolComponent();
     
     public static ServiceProtocolComponent getServiceProtocolComponent(String protocol) {
+        
         if ("dubbo".equalsIgnoreCase(protocol)) {
             return dubboProtocolComp;
         }
+        
         if ("ebox".equalsIgnoreCase(protocol)) {
             throw new RuntimeException("此版本LLY已经不再提供ebox支持");
         }

@@ -6,9 +6,10 @@ import javax.xml.namespace.QName;
 
 public interface ServiceConfig {
 
-    public abstract Collection getServiceInfos();
+    public abstract Collection<?> getServiceInfos();
 
     public abstract ServiceInfo getServiceInfo(QName qName);
 
-    public abstract ServiceInfo getServiceInfo(Class clazz);
+    public abstract ServiceInfo getServiceInfo(Class<?> clazz);
+    
 }

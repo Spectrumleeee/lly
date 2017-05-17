@@ -27,7 +27,6 @@ public class ParamEncryptUtil {
     private static final Logger logger = LoggerFactory.getLogger(ParamEncryptUtil.class);
     
     public static final int PROCESS_TYPE_ENCRYPT = 0;
-    
     public static final int PROCESS_TYPE_DECRYPT = 1;
     
     private static final Set<Class<?>> BASIC_TYPES = getBasicTypes();

@@ -20,6 +20,17 @@ import xmu.lgp.lly.integration.exception.ServiceParseException;
 
 public class XmlServicesConfigurator extends AbstractServiceConfig implements InitializingBean {
 
+    private static final Logger logger = LoggerFactory.getLogger(XmlServicesConfigurator.class);
+    
+    private static final String SERVICES_CONFIG_FILE_SUFFIX = "services.xml";
+    private static final String SERVICES_ELEM_NAME = "services";
+    private static final String SERVICE_ELEM_NAME = "service";
+    private static final String OPERATION_ELEM_NAME = "operation";
+    
+    private Resource[] configResources;
+    private String serviceFileSuffix;
+    private boolean autoDiscover = true;
+    
     public XmlServicesConfigurator() {
     }
 
@@ -51,7 +62,7 @@ public class XmlServicesConfigurator extends AbstractServiceConfig implements In
             return;
         }
         File[] childFiles = configDir.listFiles();
-        String suffix = serviceFileSuffix != null ? serviceFileSuffix : "services.xml";
+        String suffix = serviceFileSuffix != null ? serviceFileSuffix : SERVICES_CONFIG_FILE_SUFFIX;
         for (int i=0; i < childFiles.length; i++) {
             File childFile = childFiles[i];
             if(childFile.isDirectory()) {
@@ -73,7 +84,7 @@ public class XmlServicesConfigurator extends AbstractServiceConfig implements In
     protected void loadConfig(InputStream configStream) throws Exception {
         Document configDoc = XmlUtil.doc(configStream);
         Element servicesElem = configDoc.getDocumentElement();
-        if(!"services".equals(servicesElem.getLocalName())) {
+        if(!SERVICES_ELEM_NAME.equals(servicesElem.getLocalName())) {
             throw new ServiceParseException("unrecognized element " + servicesElem.getLocalName());
         }
         boolean usePkgNamespace = false;
@@ -82,7 +93,7 @@ public class XmlServicesConfigurator extends AbstractServiceConfig implements In
         if(usePkgNamespaceAttr != null && "true".equalsIgnoreCase(usePkgNamespaceAttr)) {
             usePkgNamespace = true;
         }
-        NodeList elementList = servicesElem.getElementsByTagName("service");
+        NodeList elementList = servicesElem.getElementsByTagName(SERVICE_ELEM_NAME);
         if (elementList != null) {
             for(int i=0; i<elementList.getLength(); i++) {
                 try {
@@ -108,7 +119,7 @@ public class XmlServicesConfigurator extends AbstractServiceConfig implements In
         String register = serviceElem.getAttribute("register");
        
         try {
-            Class serviceClass = getClass().getClassLoader().loadClass(serviceInterfaceName);
+            Class<?> serviceClass = getClass().getClassLoader().loadClass(serviceInterfaceName);
             ServiceInfo serviceInfo;
             if (usePkgNamespace) {
                 serviceInfo = new ServiceInfo(serviceClass, new QName(null, serviceName), serviceImplementor);
@@ -162,7 +173,7 @@ public class XmlServicesConfigurator extends AbstractServiceConfig implements In
     }
     
     private void parseOperationInfos(Element serviceElem, ServiceInfo serviceInfo) {
-        NodeList operationList = serviceElem.getElementsByTagName("operation");
+        NodeList operationList = serviceElem.getElementsByTagName(OPERATION_ELEM_NAME);
         if(operationList != null) {
             for(int i=0; i<operationList.getLength(); i++) {
                 Element operationElem = (Element)operationList.item(i);
@@ -217,12 +228,4 @@ public class XmlServicesConfigurator extends AbstractServiceConfig implements In
         return sensitiveServices.get(serviceClass) == null ? false : ((Boolean)sensitiveServices.get(serviceClass)).booleanValue();
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(XmlServicesConfigurator.class);
-    private static final String SERVICES_CONFIG_FILE_SUFFIX = "services.xml";
-    private static final String SERVICES_ELEM_NAME = "services";
-    private static final String SERVICE_ELEM_NAME = "service";
-    private static final String OPERATION_ELEM_NAME = "operation";
-    private Resource[] configResources;
-    private String serviceFileSuffix;
-    private boolean autoDiscover = true;
 }

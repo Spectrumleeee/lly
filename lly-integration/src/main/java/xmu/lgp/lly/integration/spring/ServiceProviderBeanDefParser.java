@@ -26,7 +26,7 @@ public class ServiceProviderBeanDefParser extends AbstractServiceFactoryBeanDefP
         ServiceProtocolComponent svcProtocolComp = ServiceProtocolComponentFactory.getServiceProtocolComponent(protocol);
         
         if (serviceConfig != null) {
-            Iterator<ServiceInfo> serviceIt = serviceConfig.getServiceInfos().iterator();
+            Iterator<ServiceInfo> serviceIt = (Iterator<ServiceInfo>) serviceConfig.getServiceInfos().iterator();
             while(serviceIt.hasNext()) {
                 svcProtocolComp.registerProviderService(parserContext.getRegistry(), (ServiceInfo)serviceIt.next(), tokenFlag);
             }
