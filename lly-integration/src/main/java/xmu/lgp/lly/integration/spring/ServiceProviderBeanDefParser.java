@@ -13,13 +13,16 @@ import xmu.lgp.lly.integration.config.ServiceInfo;
 
 public class ServiceProviderBeanDefParser extends AbstractServiceFactoryBeanDefParser {
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void doParse(Element element, ParserContext parserContext, BeanDefinition beanDef) {
         beanDef.setBeanClassName(ServiceConsumerFactoryBean.class.getName());
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void registerServiceBeans(ParserContext parserContext, ServiceConfig serviceConfig, String protocol, boolean tokenFlag) {
+        
         ServiceProtocolComponent svcProtocolComp = ServiceProtocolComponentFactory.getServiceProtocolComponent(protocol);
         
         if (serviceConfig != null) {

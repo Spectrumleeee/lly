@@ -28,6 +28,7 @@ public class MonitorServiceImpl implements MonitorService, InitializingBean {
             systemStatus.setIp("unknown");
         }
         systemStatus.setProcessUser(System.getProperty("user.name"));
+        
         ClassPathResource classPathResource = new ClassPathResource("lly.version");
         if(classPathResource.exists()) {
             Properties properties = new Properties();

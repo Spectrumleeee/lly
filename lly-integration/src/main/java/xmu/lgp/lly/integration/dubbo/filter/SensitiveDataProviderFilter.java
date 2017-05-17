@@ -60,8 +60,7 @@ public class SensitiveDataProviderFilter implements Filter {
             }
         } catch (Exception e) {
             logger.error("[ENTX-END]敏感数据处理异常", e);
-            Throwable exception = new SystemException(SystemErrorCodes.ENCRYPT_ERROR, e.getMessage(), e);
-            return new RpcResult(exception);
+            return new RpcResult(new SystemException(SystemErrorCodes.ENCRYPT_ERROR, e.getMessage(), e));
         }
         
         Result result = invoker.invoke(invocation);
@@ -69,18 +68,17 @@ public class SensitiveDataProviderFilter implements Filter {
             if (getEncryptor().shouldServerDecryptResponse()) {
                 logger.debug("敏感数据返回解密处理");
                 if (result.getValue() != null) {
-                    Object orginalResult = SerializationUtils.clone((Serializable)result.getValue());
+                    Object originalResult = SerializationUtils.clone((Serializable)result.getValue());
                     Method method = invoker.getInterface().getMethod(invocation.getMethodName(), invocation.getParameterTypes());
-                    // TODO blabla
-                    ((RpcResult)result).setResult(orginalResult);
+                    ((RpcResult)result).setValue(ParamEncryptUtil.decrypt(method, originalResult, getEncryptor()));
                 }
             }
         } catch (Exception e) {
-            
+            logger.error("[ENTX-END]敏感数据返回处理异常", e);
+            return new RpcResult(new SystemException(SystemErrorCodes.ENCRYPT_ERROR, e.getMessage(), e));
         }
         
-        return null;
+        logger.debug("[ENTX-END]敏感数据拦截器");
+        return result;
     }
-
-    
 }

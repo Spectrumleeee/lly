@@ -12,14 +12,15 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.alibaba.dubbo.config.RegistryConfig;
+
 public class RegistryBeanDefParser implements BeanDefinitionParser {
 
     private static Logger logger = LoggerFactory.getLogger(RegistryBeanDefParser.class);
     
     @Override
     public BeanDefinition parse(Element element, ParserContext parserContext) {
-//        BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(RegistryConfig.class.getName());
-        BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition("com.alibaba.dubbo.config.RegistryConfig");
+        BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(RegistryConfig.class.getName());
         BeanDefinition beanDef = builder.getRawBeanDefinition();
         
         NodeList nodes = element.getChildNodes();
@@ -30,7 +31,19 @@ public class RegistryBeanDefParser implements BeanDefinitionParser {
             }
         }
         
-        return null;
+        String beanId = getNodeAttrValue(element, "id", false);
+        String address = getNodeAttrValue(element, "address", false);
+        
+        logger.info("Registering Registry id:{}, addres:{}", beanId, address);
+        
+        beanDef.setLazyInit(false);
+        beanDef.setScope("singleton");
+        beanDef.getPropertyValues().add("address", address);
+        
+        parserContext.getRegistry().registerBeanDefinition(beanId, beanDef);
+        
+        logger.info("Registering Registry Done");
+        return beanDef;
     }
 
     protected void parseChildElement(Element element, ParserContext parserContext, BeanDefinition beanDef) {
@@ -43,9 +56,11 @@ public class RegistryBeanDefParser implements BeanDefinitionParser {
     private String getNodeAttrValue(Node tagNode, String attrName, boolean nullable) {
         String val = null;
         Node node = tagNode.getAttributes().getNamedItem(attrName);
+        
         if (node != null) {
             val = node.getNodeValue();
         }
+        
         if(!nullable) {
             Assert.isTrue(!StringUtils.isEmpty(val), "数据拆分 - 数据源属性" + attrName + "不能为空");
         }

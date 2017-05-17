@@ -1,20 +1,13 @@
 package xmu.lgp.lly.integration.spring;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
 import xmu.lgp.lly.integration.config.ServiceConfig;
 
-public class ServiceProviderFactoryBean implements ApplicationListener {
-
-    @Override
-    public void onApplicationEvent(ApplicationEvent arg0) {
-        onApplicationEvent((ContextRefreshedEvent) arg0);
-    }
-
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {}
+@Deprecated
+public class ServiceProviderFactoryBean implements ApplicationListener<ContextRefreshedEvent> {
 
     private ApplicationContext appCtx;
     private ServiceConfig serviceConfig;
@@ -44,4 +37,6 @@ public class ServiceProviderFactoryBean implements ApplicationListener {
         this.protocol = protocol;
     }
 
+    public void onApplicationEvent(ContextRefreshedEvent event) {}
+    
 }

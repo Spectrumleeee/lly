@@ -36,16 +36,19 @@ public abstract class AbstractServiceFactoryBeanDefParser implements BeanDefinit
 
         XmlServicesConfigurator xmlServiceConfig = new XmlServicesConfigurator();
         String protocol = "dubbo";
+        
         boolean tokenFlag = false;
         NamedNodeMap attrs = element.getAttributes();
         Attr protocolAttr = (Attr)attrs.getNamedItem("protocol");
         if(protocolAttr != null) {
             protocol = protocolAttr.getValue();
         }
+        
         Attr tokenAttr = (Attr)attrs.getNamedItem("tokenflag");
         if(tokenAttr != null) {
             tokenFlag = Boolean.parseBoolean(tokenAttr.getValue());
         }
+        
         Attr configAttr = (Attr)attrs.getNamedItem("config");
         if(configAttr != null) {
             PathMatchingResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver(parserContext.getReaderContext().getResourceLoader());
@@ -54,17 +57,23 @@ public abstract class AbstractServiceFactoryBeanDefParser implements BeanDefinit
                 xmlServiceConfig.setConfigResources(configResources);
                 xmlServiceConfig.loadConfigs();
             } catch (IOException e) {
-                throw new IllegalArgumentException("failed to find config resource");
+                throw new IllegalArgumentException("解析服务配置异常", e);
             }
         }
+        
         beanDef.getPropertyValues().addPropertyValue("protocol", protocol);
         beanDef.getPropertyValues().addPropertyValue("serviceConfig", xmlServiceConfig);
+        // 调用具体的解析器处理
         doParse(element, parserContext, beanDef);
+        
         beanDef.setLazyInit(false);
         beanDef.setScope("singleton");
+        
         String id = parserContext.getReaderContext().generateBeanName(beanDef);
+        // 注册解析结果的beanDef
         parserContext.getRegistry().registerBeanDefinition(id, beanDef);
         registerServiceBeans(parserContext, xmlServiceConfig, protocol, tokenFlag);
+        
         return beanDef;
     }
 

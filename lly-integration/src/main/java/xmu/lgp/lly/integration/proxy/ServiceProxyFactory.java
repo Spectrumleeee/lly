@@ -4,6 +4,7 @@ import java.lang.reflect.Proxy;
 
 public class ServiceProxyFactory<T> {
     
+    @SuppressWarnings("unchecked")
     public T createProxy(Class<T> serviceClazz, ServiceInvokingProxy serviceInvokingProxy) {
         ServiceInvocationHandler serviceInvocationHandler = new ServiceInvocationHandler();
         serviceInvocationHandler.setServiceInvokingProxy(serviceInvokingProxy);
