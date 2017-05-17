@@ -10,7 +10,7 @@ public class ServiceContext {
     
     public static final String DEFAULT_REQUEST_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
     
-    private static final ThreadLocal<ServiceContext> contexts = new InheritableThreadLocal(){
+    private static final ThreadLocal<ServiceContext> contexts = new InheritableThreadLocal<ServiceContext>(){
         
         public final ServiceContext childValue(ServiceContext parent) {
             ServiceContext c = new ServiceContext();
@@ -20,14 +20,14 @@ public class ServiceContext {
             return c;
         }
         
-        protected ServiceContext initalValue() {
+        protected ServiceContext initialValue() {
             return new ServiceContext();
         }
     };
     
-    private static final String llyPrefix = "k.";
+    private static final String LLY_PREFIX = "k.";
     
-    private Map<String, String> headers = new ConcurrentHashMap();
+    private Map<String, String> headers = new ConcurrentHashMap<>();
     
     public static ServiceContext getContext() {
         return (ServiceContext)contexts.get();
@@ -70,7 +70,7 @@ public class ServiceContext {
         headers.putAll(headers);
     }
     
-    private Map<String, String> getHeaders() {
+    public Map<String, String> getHeaders() {
         return headers;
     }
     
@@ -79,12 +79,12 @@ public class ServiceContext {
     }
     
     public Map<String, String> getCloneHeaders() {
-        Map<String, String> m = new HashMap();
+        Map<String, String> m = new HashMap<>();
         Iterator<String> keys = headers.keySet().iterator();
         
         while(keys.hasNext()) {
             String key = (String)keys.next();
-            m.put("k." + key, headers.get(key));
+            m.put(LLY_PREFIX + key, headers.get(key));
         }
         
         return m;
@@ -111,8 +111,8 @@ public class ServiceContext {
     public void addHeaders(Map<String, String> headers) {
         for(Map.Entry<String, String> e : headers.entrySet()) {
             String key = (String)e.getKey();
-            if(key != null && key.startsWith("k.")) {
-                addHeader(key.substring("k.".length()), e.getValue());
+            if(key != null && key.startsWith(LLY_PREFIX)) {
+                addHeader(key.substring(LLY_PREFIX.length()), e.getValue());
             }
         }
     }

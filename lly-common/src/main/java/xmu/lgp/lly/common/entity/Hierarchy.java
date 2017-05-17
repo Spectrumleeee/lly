@@ -55,7 +55,8 @@ public class Hierarchy<T> extends BaseEntity {
         if(getClass() != obj.getClass()) {
             return false;
         }
-        Hierarchy<T> other = (Hierarchy)obj;
+        @SuppressWarnings("unchecked")
+        Hierarchy<T> other = (Hierarchy<T>)obj;
         if(id == null) {
             return false;
         } else if (!id.equals(other.getId())) {

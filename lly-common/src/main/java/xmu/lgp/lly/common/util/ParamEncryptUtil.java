@@ -42,7 +42,7 @@ public class ParamEncryptUtil {
     }
     
     private static Set<Class<?>> getBasicTypes() {
-        Set<Class<?>> ret = new HashSet();
+        Set<Class<?>> ret = new HashSet<Class<?>>();
         ret.add(Boolean.class);
         ret.add(Character.class);
         ret.add(Byte.class);
@@ -104,7 +104,7 @@ public class ParamEncryptUtil {
     }
     
     private static String removeInterfacePrefix(String contextKey) {
-        return contextKey.substring("interface ".length());
+        return contextKey.substring(INTERFACE_PREFIX.length());
     }
     
     public static <T> void encrypt(T[] args, Encryptor encryptor) {
@@ -327,7 +327,7 @@ public class ParamEncryptUtil {
     }
     
     private static String removeClassPrefix(String contextKey) {
-        return contextKey.substring("class ".length());
+        return contextKey.substring(CLASS_PREFIX.length());
     }
     
     private static <T> T processSet(T arg, Encryptor encryptor, int type, String deep) {

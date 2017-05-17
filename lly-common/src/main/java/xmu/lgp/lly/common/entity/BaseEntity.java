@@ -154,7 +154,7 @@ public class BaseEntity implements Serializable {
                     props = new PropertyDescriptor[propList.size()];
                     propList.toArray(props);
 
-                    Arrays.sort(props, new Comparator() {
+                    Arrays.sort(props, new Comparator<Object>() {
                         @Override
                         public int compare(Object param1, Object param2) {
                             int param1TypeSortValue = BaseEntity.getTypeSortValue(((PropertyDescriptor) param1)
