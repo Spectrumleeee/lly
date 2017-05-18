@@ -3,6 +3,7 @@ package xmu.lgp.lly.integration.config;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -266,5 +267,13 @@ public class ServiceInfo {
     
     public OperationInfo getOperationInfo(String operationName) {
         return (OperationInfo) operations.get(operationName);
+    }
+
+    public Iterator<OperationInfo> getOperationIterator() {
+        return operations.values().iterator();
+    }
+
+    public boolean isRegister() {
+        return register;
     }
 }
