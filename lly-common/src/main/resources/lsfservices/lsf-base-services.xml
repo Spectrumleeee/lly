@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<services>
+
+    <!-- <service name="planManager" interface="xmu.lgp.pms.manager.PlanManager" timeout="15" /> -->
+
+</services>
