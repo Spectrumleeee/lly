@@ -156,7 +156,7 @@ public class DubboProtocolComponent implements ServiceProtocolComponent {
             }
         }
         
-        if (serviceInfo.isRegister()) {
+        if (serviceInfo.isRegister() != null) {
             beanDef.getPropertyValues().add("register", serviceInfo.isRegister());
         }
         
@@ -166,7 +166,7 @@ public class DubboProtocolComponent implements ServiceProtocolComponent {
         }
         
         List<MethodConfig> methodConfigList = generateMethodConfig(serviceInfo);
-        beanDef.getPropertyValues().add("method", methodConfigList);
+        beanDef.getPropertyValues().add("methods", methodConfigList);
         if (serviceInfo.isValidation()) {
             beanDef.getPropertyValues().add("validation", "true");
         }

@@ -245,7 +245,7 @@ public class ServiceInfo {
         this.sensitive = sensitive;
     }
 
-    public Boolean getRegister() {
+    public Boolean isRegister() {
         return register;
     }
 
@@ -273,7 +273,4 @@ public class ServiceInfo {
         return operations.values().iterator();
     }
 
-    public boolean isRegister() {
-        return register;
-    }
 }
