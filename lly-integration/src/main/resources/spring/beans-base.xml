@@ -14,9 +14,9 @@
         http://xmu.lgp.com/lly/integration/ 
         http://xmu.lgp.com/lly/integration.xsd">
         
-<!--     <bean id="springContextHolder" class="xmu.lgp.lly.framework.spring.SpringContextHolder" /> -->
-<!--     <bean class="xmu.lgp.lly.integration.RequestSafelyStoper" /> -->
-<!--     <bean id="monitorServiceImpl" class="xmu.lgp.lly.integration.monitor.MonitorServiceImpl" /> -->
+        <bean id="springContextHolder" class="xmu.lgp.lly.framework.spring.SpringContextHolder" />
+        <bean id="requestSafelyStoper" class="xmu.lgp.lly.integration.RequestSafelyStoper" />
+        <bean id="monitorServiceImpl" class="xmu.lgp.lly.integration.monitor.MonitorServiceImpl" />
         
 <!--     <lly:serviceprovider protocol="dubbo" config="classpath:/services/lly-example-provider-services.xml" /> -->
 <!--     <lly:serviceconsumer protocol="dubbo" config="classpath:/services/lly-example-consumer-services.xml" /> -->
