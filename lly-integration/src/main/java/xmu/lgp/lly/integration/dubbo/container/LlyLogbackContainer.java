@@ -26,7 +26,7 @@ public class LlyLogbackContainer implements Container {
         }
         
         instance.hasStart = true;
-        System.setProperty("dubbo.application.logger", "slf4j");
+        System.setProperty("dubbo.application.logger", DEFAULT_ADAPTER);
         
         logger = LoggerFactory.getLogger(LlyLogbackContainer.class);
         logger.warn("Contaner[" + getClass().getSimpleName() + "] started.");
